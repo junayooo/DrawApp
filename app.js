@@ -8,6 +8,7 @@ const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 const fileInput = document.getElementById("file");
+const textInput = document.getElementById("text");
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
@@ -15,6 +16,7 @@ const CANVAS_HEIGHT = 800;
 canvas.width=CANVAS_WIDTH;
 canvas.height=CANVAS_HEIGHT;
 ctx.lineWidth=lineWidth.value; //canvas width/height 아래에 lineWidth코드를 넣어야 적용 됨.
+ctx.lineCap = "round"; //선의 끝과 끝을 둥글게 해줌.
 
 let isPainting = false;
 let isFilling = false;
@@ -73,6 +75,7 @@ function onDestroyClick(){
     ctx.fillStyle = "white";
     ctx.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
     fileInput.value = null;
+    textInput.value = null;
 }
 
 function onEraserClick(){
@@ -90,7 +93,17 @@ function onFileChange(event){
         ctx.drawImage(image,0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         //fileInput.value = null; 이거 해야하는지 모르겠음..
     }
+}
 
+function onDoubleClick(event){
+    const text = textInput.value;
+    if (text !== "") {
+        ctx.save(); //canvas의 현재 상태를 저장
+        ctx.lineWidth = 1;
+        ctx.font = "68px 'Press Start 2P'";
+        ctx.fillText(text,event.offsetX,event.offsetY);
+        ctx.restore(); //save와 restore 사이에 있는 코드는 모두 사라짐. 다시 원래 상태로 돌아감.
+    } //text가 비어있지 않다면 수행
 }
 
 canvas.addEventListener("mousemove",onMove);
@@ -110,5 +123,7 @@ destroyBtn.addEventListener("click",onDestroyClick); // canvas 전체 다 지우
 eraserBtn.addEventListener("click",onEraserClick); // canvas 부분 지우기
 
 fileInput.addEventListener("change",onFileChange); // image를 canvas에 넣기
+
+canvas.addEventListener("dblclick",onDoubleClick); //canvas에서 dbclick을 하면 text 넣기
 
 
