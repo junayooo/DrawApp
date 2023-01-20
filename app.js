@@ -9,6 +9,7 @@ const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 const fileInput = document.getElementById("file");
 const textInput = document.getElementById("text");
+const saveBtn = document.getElementById("save");
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
@@ -100,10 +101,18 @@ function onDoubleClick(event){
     if (text !== "") {
         ctx.save(); //canvas의 현재 상태를 저장
         ctx.lineWidth = 1;
-        ctx.font = "68px 'Press Start 2P'";
+        ctx.font = "68px sans-serif";
         ctx.fillText(text,event.offsetX,event.offsetY);
         ctx.restore(); //save와 restore 사이에 있는 코드는 모두 사라짐. 다시 원래 상태로 돌아감.
     } //text가 비어있지 않다면 수행
+}
+
+function onSaveClick(){
+    const url = canvas.toDataURL(); //canvas에 그린 image의 url을 받아옴
+    const a = document.createElement("a"); //<a></a>를 만든다
+    a.href = url;
+    a.download = "myDrawing.jpg"; // 저장할때 이름
+    a.click() // 저장하고 다운로드
 }
 
 canvas.addEventListener("mousemove",onMove);
@@ -125,5 +134,7 @@ eraserBtn.addEventListener("click",onEraserClick); // canvas 부분 지우기
 fileInput.addEventListener("change",onFileChange); // image를 canvas에 넣기
 
 canvas.addEventListener("dblclick",onDoubleClick); //canvas에서 dbclick을 하면 text 넣기
+
+saveBtn.addEventListener("click",onSaveClick); // image를 save하기
 
 
