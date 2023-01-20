@@ -4,12 +4,14 @@ const ctx = canvas.getContext("2d");
 const lineWidth = document.getElementById("line-width");
 const color = document.getElementById("color");
 const colorOptions = Array.from(document.getElementsByClassName("color-option")) // Array.from으로 배열 생성해야 forEach를 사용할 수 있음
+const modeBtn = document.getElementById("mode-btn");
 
 canvas.width=800;
 canvas.height=800;
 ctx.lineWidth=lineWidth.value; //canvas width/height 아래에 lineWidth코드를 넣어야 적용 됨.
 
 let isPainting = false;
+let isFilling = false;
 
 function onMove(event){
     if(isPainting){
@@ -44,13 +46,33 @@ function onColorClick(event){
     color.value = colorValue; //사용자가 클릭한 걸 알아차릴 수 있게 클릭 시 컬러 색상 변경
 }
 
+function onModeClick(){
+    if (isFilling) {
+        isFilling = false;
+        modeBtn.innerText = "Fill";
+    }
+    else{
+        isFilling=true;
+        modeBtn.innerText="Draw";
+    }
+}
+
+function onCanvasClick(){
+    if(isFilling){
+        ctx.fillRect(0,0,800,800);
+    }
+}
+
 canvas.addEventListener("mousemove",onMove);
 canvas.addEventListener("mousedown",startPainting);
 canvas.addEventListener("mouseup",cancelPainting);
 canvas.addEventListener("mouseleave",cancelPainting); //버그 해결
 
-lineWidth.addEventListener("change",onLineWidthChange);
-color.addEventListener("change",onColorChange);
+lineWidth.addEventListener("change",onLineWidthChange); // 선 굵기 변경
+color.addEventListener("change",onColorChange); //color 선택
 
-colorOptions.forEach((color)=>color.addEventListener("click",onColorClick));
+colorOptions.forEach((color)=>color.addEventListener("click",onColorClick)); // color-option 선택
+
+modeBtn.addEventListener("click",onModeClick); // draw, fill 선택하기
+canvas.addEventListener("click",onCanvasClick); //canvas fill하기
 
