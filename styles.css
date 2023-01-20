@@ -1,22 +1,107 @@
+@import "reset.css";
+
 canvas {
     width: 800px;
     height: 800px;
-    border: 5px solid black;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),0 1px 3px rgba(0,0,0,0.08);
 }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f6f9fc;
+    padding:20px;
 }
-
 .color-option {
     width: 50px;
     height: 50px;
     cursor: pointer;
     border-radius: 25px;
+    transition:transform ease-in-out .1s;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),0 1px 3px rgba(0,0,0,0.08);
+
 }
-.select-color {
+.color-option:hover{
+    transform:scale(1.2);
+}
+.select-color{
     display: flex;
+    gap: 15px;
+}
+.color-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding-right: 20px;
+}
+.btns{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-left: 20px;
+    width: 300px;
+}
+.color-op{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
 }
 
+button,label {
+    all:unset; 
+    padding: 20px 0px;
+    text-align: center;
+    background-color: pink;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: opacity linear .1s;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),0 1px 3px rgba(0,0,0,0.08);
+}
+button:hover {
+    opacity: 0.8;
+}
+
+input#text {
+    all:unset;
+    padding: 15px 0px;
+    background-color: white;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),0 1px 3px rgba(0,0,0,0.08);
+}
+
+input#file{
+    display: none;
+}
+
+input#color {
+    -webkit-appearance: none;
+    border: none;
+	width: 50px;
+	height: 50px;
+    
+}
+input#color::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input#color::-webkit-color-swatch {
+	border: none;
+}
+
+#line-width {
+    margin-left: 5px;
+        width: 290px;
+        border-radius: 10px;
+        outline: 3px solid pink;
+        -webkit-appearance: none;
+        accent-color: pink;
+      
+}
