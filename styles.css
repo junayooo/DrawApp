@@ -9,3 +9,10 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.color-option {
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 25px;
+}

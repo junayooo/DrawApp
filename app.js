@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 
 const lineWidth = document.getElementById("line-width");
 const color = document.getElementById("color");
+const colorOptions = Array.from(document.getElementsByClassName("color-option")) // Array.from으로 배열 생성해야 forEach를 사용할 수 있음
 
 canvas.width=800;
 canvas.height=800;
@@ -35,6 +36,14 @@ function onColorChange(event){
     ctx.strokeStyle = event.target.value;
     ctx.fillStyle = event.target.value;
 }
+
+function onColorClick(event){
+    const colorValue = event.target.dataset.color; //data-color에 있는 값을 가져옴
+    ctx.strokeStyle = colorValue;
+    ctx.fillStyle = colorValue;
+    color.value = colorValue; //사용자가 클릭한 걸 알아차릴 수 있게 클릭 시 컬러 색상 변경
+}
+
 canvas.addEventListener("mousemove",onMove);
 canvas.addEventListener("mousedown",startPainting);
 canvas.addEventListener("mouseup",cancelPainting);
@@ -43,5 +52,5 @@ canvas.addEventListener("mouseleave",cancelPainting); //버그 해결
 lineWidth.addEventListener("change",onLineWidthChange);
 color.addEventListener("change",onColorChange);
 
-
+colorOptions.forEach((color)=>color.addEventListener("click",onColorClick));
 
