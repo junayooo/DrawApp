@@ -7,6 +7,7 @@ const colorOptions = Array.from(document.getElementsByClassName("color-option"))
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
+const fileInput = document.getElementById("file");
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
@@ -71,12 +72,25 @@ function onCanvasClick(){
 function onDestroyClick(){
     ctx.fillStyle = "white";
     ctx.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+    fileInput.value = null;
 }
 
 function onEraserClick(){
     ctx.strokeStyle = "white";
     isFilling = false;
     modeBtn.innerText = "Fill";
+}
+
+function onFileChange(event){
+    const file = event.target.files[0]// image의 이름을 받아 온다.
+    const url = URL.createObjectURL(file); // image의 URL을 받아 온다.
+    const image = new Image(); // <img />와 같음
+    image.src = url;
+    image.onload = function() {
+        ctx.drawImage(image,0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+        //fileInput.value = null; 이거 해야하는지 모르겠음..
+    }
+
 }
 
 canvas.addEventListener("mousemove",onMove);
@@ -94,5 +108,7 @@ canvas.addEventListener("click",onCanvasClick); //canvas fill하기
 
 destroyBtn.addEventListener("click",onDestroyClick); // canvas 전체 다 지우기
 eraserBtn.addEventListener("click",onEraserClick); // canvas 부분 지우기
+
+fileInput.addEventListener("change",onFileChange); // image를 canvas에 넣기
 
 
